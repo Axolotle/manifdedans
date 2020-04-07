@@ -2,3 +2,6 @@ __pycache__/
 
 venv
 .env
+
+static/js/libs/*
+!static/js/libs/.gitkeep

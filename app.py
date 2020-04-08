@@ -34,14 +34,21 @@ class MyNamespace(Namespace):
             'id': request.sid,
         }, broadcast=True)
 
-    def on_disconnect_request(self):
-        extra_msg = ''
+    def on_stop_participation(self):
         if request.sid in data:
             del data[request.sid]
             emit('message_removed', {
                 'id': request.sid,
             }, broadcast=True)
-            extra_msg = 'and your message has been deleted'
+            emit('log', {
+                'data': 'Your message has been deleted',
+                'id': request.sid,
+            })
+
+    def on_disconnect_request(self):
+        extra_msg = ''
+        if request.sid in data:
+            extra_msg = ' and your message has been deleted'
         emit('log', {
             'data': 'You are disconnected' + extra_msg,
             'id': request.sid,
@@ -55,6 +62,11 @@ class MyNamespace(Namespace):
         })
 
     def on_disconnect(self):
+        if request.sid in data:
+            del data[request.sid]
+            emit('message_removed', {
+                'id': request.sid,
+            }, broadcast=True)
         print('\nClient disconnected', request.sid)
 
 

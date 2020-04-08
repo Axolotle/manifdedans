@@ -1,30 +1,38 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Test</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}" />
 </head>
 <body>
-    <h1>Test</h1>
-    <p>Async mode is: <b>{{ async_mode }}</b></p>
+    <div id="log-container">
+        <strong>logs:</strong>
+        <div id="log"></div>
+    </div>
 
-    <h2>Send:</h2>
-    <form id="emit" method="POST" action='#'>
-        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
-        <input type="submit" value="Echo">
-    </form>
-    <form id="broadcast" method="POST" action='#'>
-        <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
-        <input type="submit" value="Broadcast">
-    </form>
-    <form id="disconnect" method="POST" action="#">
-        <input type="submit" value="Disconnect">
-    </form>
-
-    <h2>Participants message:</h2>
-    <div id="participants"></div>
-
-    <h2>Personal log:</h2>
-    <div id="log"></div>
+    <main>
+        <h1>Test</h1>
+        <article id="form-container">
+            <h2>Participer:</h2>
+            <form id="broadcast" method="POST" action='#'>
+                <textarea id="broadcast_data" name="broadcast_data" rows="5"></textarea>
+                <input type="submit" value="Definir le slogan">
+            </form>
+            <form id="stop" method="POST" action='#'>
+                <input type="submit" value="Arrêter">
+            </form>
+            <form id="disconnect" method="POST" action="#">
+                <input type="submit" value="Déconnecter">
+            </form>
+        </article>
+        <h2>Participants:</h2>
+        <div id="manif"></div>
+    </main>
 
     <script src="{{ url_for('static', filename='js/libs/socket.io.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

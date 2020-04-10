@@ -16,23 +16,37 @@
     </div>
 
     <main>
-        <h1>Test</h1>
-        <article id="form-container">
-            <h2>Participer:</h2>
-            <form id="broadcast" method="POST" action='#'>
-                <textarea id="broadcast_data" name="broadcast_data" rows="5"></textarea>
-                <input type="submit" value="Definir le slogan">
-            </form>
-            <form id="stop" method="POST" action='#'>
-                <input type="submit" value="Arrêter">
-            </form>
-            <form id="disconnect" method="POST" action="#">
-                <input type="submit" value="Déconnecter">
-            </form>
-        </article>
-        <h2>Participants:</h2>
+        <header>
+            <h1>Manif Dedans</h1>
+            <nav>
+                <button id="participate" type="button" name="participate">Participer</button>
+                <button id="stop" class='hidden' type="button" name="stop participation">Quitter</button>
+                <button id="goto" class='hidden' type="button" name="check participation">Voir mon message</button>
+            </nav>
+        </header>
+
         <div id="manif"></div>
     </main>
+
+    <div id="form-parent" class="hidden">
+        <div id="form-container" role="dialog" aria-labelledby="form-title" aria-modal="true">
+            <h2 id="form-title">Participer en choisissant un emoji ou en définissant un message</h2>
+            <form id="broadcast" method="POST" action='#'>
+                <label>
+                    <span class="label_text">Emoji :</span>
+                    <input type="text" id="emoji" required>
+                </label>
+                <input type="submit" data-id="emoji" value="Envoyer l'émoji">
+            </form>
+            <form id="broadcast2" method="POST" action='#'>
+                <label>
+                    <span class="label_text">Message :</span>
+                    <textarea id="message" name="broadcast_data" rows="5" maxlength="120" required></textarea>
+                </label>
+                <input type="submit" data-id="message" value="Envoyer le message">
+            </form>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='js/libs/socket.io.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

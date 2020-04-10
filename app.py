@@ -33,6 +33,10 @@ class MyNamespace(Namespace):
             'data': message['data'],
             'id': request.sid,
         }, broadcast=True)
+        emit('log', {
+            'data': 'Your message has been changed',
+            'id': request.sid,
+        })
 
     def on_stop_participation(self):
         if request.sid in data:

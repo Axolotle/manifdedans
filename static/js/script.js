@@ -21,22 +21,37 @@ window.onload = () => {
     socket.on('message_changed', on_message_changed);
     socket.on('message_removed', on_message_removed);
 
+    document.getElementById('participate').onclick = participate;
+    document.getElementById('goto').onclick = goto_self;
+
     // Handlers for the different forms in the page.
-    document.querySelector('form#broadcast').onsubmit = () => {
-        let msg = document.querySelector('#broadcast_data').value.trim();
+    document.getElementById('broadcast').onsubmit = emit_message;
+    document.getElementById('broadcast2').onsubmit = emit_message;
+
+    document.querySelector('#stop').onclick = () => {
+        socket.emit('stop_participation');
+        document.getElementById('stop').classList.add('hidden');
+        document.getElementById('goto').classList.add('hidden');
+        document.getElementById('participate').focus();
+        return false;
+    };
+
+    // document.querySelector('form#disconnect').onsubmit = () => {
+    //     socket.emit('disconnect_request');
+    //     return false;
+    // };
+
+    function emit_message(e) {
+        let msg = document.getElementById(e.submitter.dataset.id).value.trim();
         if (msg != ''){
             socket.emit('message_changed', {data: msg});
+            document.getElementById('stop').classList.remove('hidden');
+            document.getElementById('goto').classList.remove('hidden');
+        } else {
+            e.stopImmediatePropagation()
         }
         return false;
-    };
-    document.querySelector('form#stop').onsubmit = () => {
-        socket.emit('stop_participation');
-        return false;
-    };
-    document.querySelector('form#disconnect').onsubmit = () => {
-        socket.emit('disconnect_request');
-        return false;
-    };
+    }
 };
 
 
@@ -50,6 +65,8 @@ function on_connection_ok(rsp) {
         let elem = add_new_message(id, rsp.data[id]);
         container.appendChild(elem);
     }
+    // reference self id in dataset
+    container.dataset.self = rsp.id;
 }
 
 function on_message_changed(rsp) {
@@ -105,8 +122,91 @@ function modify_message(elem, msg) {
             }
         }
     }
-
 }
+
+// ╭────╮
+// │ UI │
+// ╰────╯
+
+function participate() {
+    let dialog = document.getElementById('form-container');
+    let sub = dialog.parentElement;
+    let form = document.getElementById('broadcast');
+    let form2 = document.getElementById('broadcast2');
+    let emoji_input = document.getElementById('emoji');
+    let lastFocus = dialog.querySelector('input');
+
+    var pre_div = document.createElement('div');
+    sub.insertBefore(pre_div, dialog);
+    pre_div.tabIndex = 0;
+    var post_div = document.createElement('div');
+    sub.append(post_div);
+    post_div.tabIndex = 0;
+
+    sub.classList.toggle('hidden');
+    lastFocus.focus()
+
+
+    emoji_input.addEventListener('input', check_emoji_input, false);
+    document.addEventListener('focus', trap_focus, true);
+    document.addEventListener('keyup', on_keyup, false);
+    document.addEventListener('click', on_click, true);
+    form.addEventListener('submit', close, false);
+    form2.addEventListener('submit', close, false);
+
+    function check_emoji_input() {
+        if (is_single_emoji(emoji_input.value)) {
+            emoji_input.setCustomValidity('');
+        } else {
+            emoji_input.setCustomValidity('Veuillez entrer un seul émoji');
+        }
+    }
+
+    function trap_focus(e) {
+        if (!dialog.contains(e.target)) {
+            let first_elem = dialog.querySelector('input');
+            if (lastFocus == first_elem) {
+                lastFocus = dialog.querySelector('#broadcast2 input');
+            } else {
+                lastFocus = first_elem;
+            }
+            lastFocus.focus()
+        } else {
+            lastFocus = e.target;
+        }
+    }
+
+    function on_keyup(e) {
+        if (e.key == 'Escape') {
+            close();
+        }
+    }
+
+    function on_click(e) {
+        if (!dialog.contains(e.target)) {
+            close();
+        }
+    }
+
+    function close() {
+        sub.removeChild(pre_div);
+        sub.removeChild(post_div)
+        sub.classList.toggle('hidden');
+        document.removeEventListener('focus', trap_focus, true);
+        document.removeEventListener('keyup', on_keyup, false);
+        document.removeEventListener('click', on_click, true);
+        form.removeEventListener('submit', close, false);
+        form2.removeEventListener('submit', close, false);
+        emoji_input.removeEventListener('input', check_emoji_input, false);
+        document.getElementById('participate').focus();
+    }
+}
+
+function goto_self() {
+    let self_id = document.getElementById('manif').dataset.self;
+    document.getElementById('p' + self_id).scrollIntoView();
+}
+
 
 // ╭───────╮
 // │ UTILS │

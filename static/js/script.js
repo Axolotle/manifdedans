@@ -42,7 +42,8 @@ window.onload = () => {
     // };
 
     function emit_message(e) {
-        let msg = document.getElementById(e.submitter.dataset.id).value.trim();
+        let input = e.target.querySelector('textarea') || e.target.querySelector('input');
+        let msg = input.value.trim();
         if (msg != ''){
             socket.emit('message_changed', {data: msg});
             document.getElementById('stop').classList.remove('hidden');

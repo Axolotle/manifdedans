@@ -5,6 +5,8 @@ from flask_socketio import SocketIO, Namespace, emit, disconnect
 from dotenv import load_dotenv
 
 
+from tests import fake_populate
+
 load_dotenv()
 async_mode = None
 
@@ -18,6 +20,11 @@ data = {}
 @app.route('/')
 def index():
     return render_template('index.html', async_mode=socketio.async_mode)
+
+
+@app.route('/fake')
+def fake():
+    return render_template('index-fake.html', items=fake_populate())
 
 
 class MyNamespace(Namespace):

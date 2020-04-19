@@ -1,0 +1,170 @@
+/* ╭────────╮
+   │ DIALOG │
+   ╰────────╯ */
+
+.dialog-parent {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    &:not(.transparent) {
+        background-color: #0000004d;
+    }
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.dialog {
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 20px;
+    padding: 2rem 5rem 5rem 5rem;
+
+    &.mini {
+        padding: 25px;
+    }
+}
+
+/* ╭──────────────────╮
+   │ PARTICIPATE FORM │
+   ╰──────────────────╯ */
+#form {
+   max-width: 40rem;
+}
+
+form {
+    &:not(:last-of-type) {
+        margin-bottom: 2rem;
+    }
+
+    & > * {
+        display: block;
+    }
+
+    label {
+        margin-bottom: 20px;
+
+        span {
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+
+    input[type='text'] {
+        width: 150px;
+        height: 100px;
+        padding: 20px;
+        font-size: 50px;
+        border-radius: 5px;
+        border: 5px solid black;
+    }
+
+    textarea {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font: inherit;
+        border: 5px solid black;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+}
+
+.emoji-picker {
+    position: absolute;
+    margin-left: -40px;
+    margin-top: 5px;
+    height: 35px;
+    width: 35px;
+    background-color: #b2b2b2;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    font-size: 20px;
+
+    &:focus {
+        border: 2px dashed black;
+        background-color: #ddd;
+    }
+    &:hover {
+        background-color: #ddd;
+
+    }
+}
+
+/* ╭──────────────╮
+   │ EMOJI PICKER │
+   ╰──────────────╯ */
+
+#emoji-picker {
+
+    max-width: 485px;
+    height: 80vh;
+    padding: 30px;
+
+    [role='tablist'] {
+        display: flex;
+        justify-content: space-between;
+        background-color: white;
+        margin-bottom: 30px;
+
+        button {
+            width: 35px;
+            height: 35px;
+            padding: 0;
+        }
+    }
+
+    [role="tabpanel"] {
+        max-height: 90%;
+        overflow: auto;
+
+        h3 {
+            margin-top: 0;
+        }
+    }
+}
+
+#emoji-component {
+    max-width: 485px;
+
+    h4 {
+        margin-top: 0;
+    }
+}
+
+.emoji-display {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Twemoji Mozilla', 'Noto Color Emoji', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    button {
+        font: inherit;
+        font-size: 30px;
+        margin: 0;
+        padding: 0;
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        border-radius: 10px;
+        background-color: white;
+        border: none;
+
+        &:focus {
+            border: 2px dashed black;
+            background-color: #ddd;
+        }
+        &:hover {
+            background-color: #ddd;
+
+        }
+    }
+}

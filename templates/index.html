@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}" />
 </head>
 <body>
-    <div id="log-container">
+    <div id="log-container" class="hidden">
         <strong>logs:</strong>
         <div id="log"></div>
     </div>
@@ -18,34 +18,54 @@
     <main>
         <header>
             <h1>Manif Dedans</h1>
-            <nav>
-                <button id="participate" type="button" name="participate">Participer</button>
-                <button id="stop" class='hidden' type="button" name="stop participation">Quitter</button>
-                <button id="goto" class='hidden' type="button" name="check participation">Voir mon message</button>
+            <nav class="plain-buttons">
+                <button id="participate" class='button' type="button" name="participate">Participer</button>
+                <button id="stop" class='button hidden' type="button" name="stop participation">Quitter</button>
+                <button id="goto" class='button hidden' type="button" name="check participation">Voir mon message</button>
             </nav>
         </header>
 
-        <div id="manif"></div>
+        <div id="manif">
+        {% block manif %}
+        {% endblock %}
+        </div>
     </main>
 
-    <div id="form-parent" class="hidden">
-        <div id="form-container" role="dialog" aria-labelledby="form-title" aria-modal="true">
+    <div id="form-parent" class="dialog-parent hidden">
+        <div tabindex="0"></div>
+        <div id="form" class="dialog plain-buttons" role="dialog" aria-labelledby="form-title" aria-modal="true">
             <h2 id="form-title">Participer en choisissant un emoji ou en définissant un message</h2>
-            <form id="broadcast" method="POST" action='#'>
+            <form id="emoji-form" method="POST" action="#">
                 <label>
-                    <span class="label_text">Emoji :</span>
-                    <input type="text" id="emoji" required>
+                    <span>Choisissez un emoji :</span>
+                    <input type="text" id="emoji-input" required><button class="emoji-picker" type="button" aria-label="selecteur d'émojis">😠&#xFE0E;</button>
                 </label>
-                <input type="submit" data-id="emoji" value="Envoyer l'émoji">
+                <input class="button" type="submit" data-id="emoji" value="Envoyer l'émoji">
             </form>
-            <form id="broadcast2" method="POST" action='#'>
+            <form id="message-form" method="POST" action="#">
                 <label>
-                    <span class="label_text">Message :</span>
-                    <textarea id="message" rows="5" maxlength="120" required></textarea>
+                    <span>Ou choisissez un message :</span>
+                    <textarea id="message-input" rows="5" maxlength="120" required></textarea><button class="emoji-picker" type="button" aria-label="selecteur d'émojis">😠&#xFE0E;</button>
                 </label>
-                <input type="submit" data-id="message" value="Envoyer le message">
+                <input class="button" type="submit" data-id="message" value="Envoyer le message">
             </form>
         </div>
+        <div tabindex="0"></div>
+    </div>
+
+    <div id="emoji-picker-parent" class="dialog-parent hidden">
+        <div tabindex="0"></div>
+        {% include 'emojis.html' %}
+        <div tabindex="0"></div>
+    </div>
+
+    <div id="emoji-component-parent" class="dialog-parent transparent hidden">
+        <div tabindex="0"></div>
+        <div id="emoji-component" class="dialog mini" role="dialog" aria-labelledby="component-title">
+            <h4>Choisissez un composant :</h4>
+            <div class="emoji-display"></div>
+        </div>
+        <div tabindex="0"></div>
     </div>
 
     <script src="{{ url_for('static', filename='js/libs/socket.io.js') }}"></script>

@@ -5,3 +5,5 @@ venv
 
 static/js/libs/*
 !static/js/libs/.gitkeep
+
+.sass-cache

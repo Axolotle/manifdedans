@@ -105,7 +105,7 @@ form {
    ╰──────────────╯ */
 
 #emoji-picker {
-
+    width: 100%;
     max-width: 485px;
     height: 80vh;
     padding: 30px;
@@ -117,9 +117,29 @@ form {
         margin-bottom: 30px;
 
         button {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             padding: 0;
+            border-width: 3px;
+
+            &:focus, &:hover {
+                svg * {
+                    stroke: black;
+                }
+            }
+
+            svg {
+                pointer-events: none;
+                margin-top: 2.5px;
+                width: 30px;
+                height: 30px;
+
+                * {
+                    fill: none;
+                    stroke: white;
+                    stroke-width: 3px;
+                }
+            }
         }
     }
 
@@ -159,7 +179,7 @@ form {
         border: none;
 
         &:focus {
-            border: 2px dashed black;
+            border: 3px dashed black;
             background-color: #ddd;
         }
         &:hover {

@@ -10,6 +10,9 @@ html, body {
     margin: 0;
     padding: 0;
 }
+.no-scroll {
+    overflow: hidden;
+}
 
 main {
     width: 80%;
@@ -29,14 +32,16 @@ header {
     background-color: white;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 4rem;
+    margin-bottom: 60px;
     border-bottom: 5px solid black;
 }
+
 nav {
     display: flex;
-}
-nav button {
-    margin-left: 1rem;
+
+    button {
+        margin-left: 10px;
+    }
 }
 
 h1 {
@@ -46,34 +51,36 @@ h1 {
 
 #goto {
     position: fixed;
-    bottom: 0;
-    right: 0;
+    bottom: 5px;
+    right: 5px;
 }
 
 /* ╭──────╮
    │ MAIN │
    ╰──────╯ */
 
-#manif * {
-    margin: 0;
-}
-
 #manif {
     text-align: center;
-    padding-bottom: 3rem;
+    padding-bottom: 50px;
+
+    * {
+        margin: 0;
+    }
+
+    div {
+        display: inline-block;
+        margin: 4px;
+        vertical-align: middle;
+        font-size: 50px;
+    }
 }
-#manif div {
-    display: inline-block;
-    margin: 0.2rem;
-    vertical-align: middle;
-    font-size: 50px;
-}
+
 .slogan p {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 200px;
     max-width: 200px;
-    padding: 0.5rem;
+    padding: 8px;
     border: 5px solid black;
     border-radius: 5px;
     font-size: 16px;
@@ -119,12 +126,13 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 #log-container {
     box-sizing: border-box;
     width: 100%;
-    height: 10rem;
+    height: 150px;
     overflow-y: auto;
-    padding: 1rem;
-}
-#log p {
-    margin: 0;
+    padding: 15px;
+
+    p {
+        margin: 0;
+    }
 }
 
 .hidden {

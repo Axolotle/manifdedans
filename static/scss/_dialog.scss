@@ -24,7 +24,7 @@
     background-color: white;
     border: 5px solid black;
     border-radius: 20px;
-    padding: 2rem 5rem 5rem 5rem;
+    padding: 30px 80px 80px 80px;
 
     &.mini {
         padding: 25px;
@@ -35,12 +35,12 @@
    │ PARTICIPATE FORM │
    ╰──────────────────╯ */
 #form {
-   max-width: 40rem;
+   max-width: 600px;
 }
 
 form {
     &:not(:last-of-type) {
-        margin-bottom: 2rem;
+        margin-bottom: 30px;
     }
 
     & > * {

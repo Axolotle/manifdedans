@@ -23,6 +23,7 @@ window.onload = () => {
 
     document.getElementById('participate').onclick = e => {
         let participation = new Participation(e.target);
+        document.body.classList.add('no-scroll');
         participation.on_emit_message = msg => {
             socket.emit('message_changed', {data: msg});
             document.getElementById('stop').classList.remove('hidden');
@@ -221,6 +222,7 @@ class Participation extends Dialog {
         this.dialog.querySelectorAll('button.emoji-picker').forEach(button => {
             button.removeEventListener('click', this.on_open_emoji_picker, false);
         });
+        document.body.classList.remove('no-scroll');
     }
 
     on_open_emoji_picker(e) {
